@@ -4,6 +4,10 @@ class DatagridZoomer {
     static zoomInClass = "zoom-in";
     static zoomOutClass = "zoom-out";
     static pageHeaderContainerSelector = ".jbh-page-header-container h1";
+    static breadcrumbSelector = ".p-breadcrumb";
+    static tableCaptionSelector = ".table-caption h2";
+    static tableSelector = "table.p-datatable-table";
+
     constructor() {
         setInterval(() =>{
                 const mainStorageKeyPrefix = this.getMainStorageKeyPrefix();
@@ -11,9 +15,9 @@ class DatagridZoomer {
                     const datagrids = document.querySelectorAll(DatagridZoomer.dataGridSelector);
                     datagrids.forEach((datagrid) => {
                         if(!datagrid.getAttribute("zoomer")) {
-                            const tableCaption = datagrid.querySelector('.table-caption h2');
+                            const tableCaption = datagrid.querySelector(DatagridZoomer.tableCaptionSelector);
                             const storageKey = mainStorageKeyPrefix + tableCaption.innerHTML;
-                            let closestTable = datagrid.querySelector('table.p-datatable-table');
+                            let closestTable = datagrid.querySelector(DatagridZoomer.tableSelector);
                             tableCaption.appendChild(this.createZoomerButton(true, closestTable, storageKey));
                             tableCaption.appendChild(this.createZoomerButton(false, closestTable, storageKey));
                             let storedZoom = localStorage.getItem(storageKey);
@@ -31,7 +35,7 @@ class DatagridZoomer {
         const pageHeaderContainer = document.querySelector(DatagridZoomer.pageHeaderContainerSelector);
         if(pageHeaderContainer) {
             const headerText = pageHeaderContainer.innerText;
-            const breadCrumbs = document.querySelectorAll(".p-breadcrumb")[0].innerText;
+            const breadCrumbs = document.querySelectorAll(DatagridZoomer.breadcrumbSelector)[0].innerText;
             return (headerText + "_" + breadCrumbs + "_").replace(/(\r\n|\n|\r)/gm, "").replace(/ /gm, "");
         }
         return null;
@@ -45,7 +49,7 @@ class DatagridZoomer {
         btn.onclick = () => {
             let currentZoom = Number(closestTable.style.zoom ? closestTable.style.zoom : 1);
             let newZoom = zoomIn ? currentZoom+.25 : currentZoom-.25
-            this.resetButtons(btn.closest('jbh-data-grid'), newZoom);
+            this.resetButtons(btn.closest(DatagridZoomer.dataGridSelector), newZoom);
             closestTable.style.zoom = newZoom.valueOf();
             localStorage.setItem(storageKey, newZoom.valueOf())
         }
@@ -53,11 +57,11 @@ class DatagridZoomer {
     }
     resetButtons(datagrid, zoomNumber){
             datagrid.querySelectorAll('.' + DatagridZoomer.btnClass).forEach((zoomerButton) => {
-                const zoomInButton = zoomerButton.className.indexOf(DatagridZoomer.zoomInClass) > -1;
+                const isZoomInButton = zoomerButton.className.indexOf(DatagridZoomer.zoomInClass) > -1;
                 zoomerButton.disabled = false;
-                if(zoomNumber == 1 && !zoomInButton) {
+                if(zoomNumber == 1 && !isZoomInButton) {
                     zoomerButton.disabled = true;
-                } else if(zoomNumber > 1.75 && zoomInButton) {
+                } else if(zoomNumber > 1.75 && isZoomInButton) {
                     zoomerButton.disabled = true;
                 }
             })
