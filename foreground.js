@@ -10,16 +10,16 @@ class DatagridZoomer {
 
     constructor() {
         setInterval(() =>{
-                const mainStorageKeyPrefix = this.getMainStorageKeyPrefix();
-                if(mainStorageKeyPrefix) {
-                    const datagrids = document.querySelectorAll(DatagridZoomer.dataGridSelector);
-                    datagrids.forEach((datagrid) => {
-                        if(!datagrid.getAttribute("zoomer")) {
-                            try {
-                                const tableCaption = datagrid.querySelector(DatagridZoomer.tableCaptionSelector);
-                                const storageKey = mainStorageKeyPrefix + tableCaption.innerHTML;
-    
-                                let closestTable = datagrid.querySelector(DatagridZoomer.tableSelector);
+            const datagrids = document.querySelectorAll(DatagridZoomer.dataGridSelector);
+            datagrids.forEach((datagrid) => {
+                if(!datagrid.getAttribute("zoomer")) {
+                    try {
+                        const tableCaption = datagrid.querySelector(DatagridZoomer.tableCaptionSelector);
+                        if(tableCaption) {
+                            const storageKey = this.getStorageKey(tableCaption.innerText);
+
+                            let closestTable = datagrid.querySelector(DatagridZoomer.tableSelector);
+                            if(closestTable) {
                                 tableCaption.appendChild(this.createZoomerButton(true, closestTable, storageKey));
                                 tableCaption.appendChild(this.createZoomerButton(false, closestTable, storageKey));
                                 
@@ -27,30 +27,31 @@ class DatagridZoomer {
                                 if(storedZoom) {
                                     closestTable.style.zoom = storedZoom.valueOf();
                                     this.resetButtons(datagrid, storedZoom.valueOf())
-                                }    
-                            } catch (error) {
-                                console.error(error);
-                            } finally {
-                                //This is to keep the buttons from indefinitely adding on error
-                                datagrid.setAttribute("zoomer", "true");
-                            }
+                                }
+                            }    
                         }
-                    });
+                    } catch (error) {
+                        console.error(error);
+                    } finally {
+                        //This is to keep the buttons from indefinitely adding on error
+                        datagrid.setAttribute("zoomer", "true");
+                    }
                 }
+            });
         }, 2000)
     }
-    getMainStorageKeyPrefix() {
-        let storageKeyPrefix = "zoomerTable";
+    getStorageKey(suffix) {
+        let storageKeyPrefix = "zoomerTable_";
         const pageHeaderContainer = document.querySelector(DatagridZoomer.pageHeaderContainerSelector);
         if(pageHeaderContainer) {
-            const headerText = pageHeaderContainer.innerText;
-            storageKeyPrefix = headerText;
+            storageKeyPrefix += pageHeaderContainer.innerText + "_";
             const breadCrumbs = document.querySelectorAll(DatagridZoomer.breadcrumbSelector)
             if(breadCrumbs) {
                 breadCrumbs[0].innerText;
-                storageKeyPrefix += ("_" + breadCrumbs + "_");
+                storageKeyPrefix += breadCrumbs + "_";
             }
         }
+        storageKeyPrefix += suffix;
         return storageKeyPrefix.replace(/(\r\n|\n|\r)/gm, "").replace(/ /gm, "");
        
     }
