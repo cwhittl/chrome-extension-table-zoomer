@@ -1,12 +1,12 @@
 class DatagridZoomer {
-    static dataGridSelector = "jbh-data-grid";
+    static dataGridSelector = "jbh-data-grid, app-table";
     static btnClass = "zoomer-button";
     static zoomInClass = "zoom-in";
     static zoomOutClass = "zoom-out";
-    static pageHeaderContainerSelector = ".jbh-page-header-container h1";
-    static breadcrumbSelector = ".p-breadcrumb";
-    static tableCaptionSelector = ".table-caption h2";
-    static tableSelector = "table.p-datatable-table";
+    static pageHeaderContainerSelector = ".jbh-page-header-container h1, app-title h1";
+    static breadcrumbSelector = ".p-breadcrumb, p-breadcrumb";
+    static tableCaptionSelector = ".table-caption h2, p-header h2";
+    static tableSelector = "table.p-datatable-table, p-table .ui-table .ui-table-scrollable-body table";
 
     constructor() {
         setInterval(() =>{
