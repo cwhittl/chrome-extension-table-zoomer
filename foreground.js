@@ -5,7 +5,7 @@ class DatagridZoomer {
     static zoomOutClass = "zoom-out";
     static pageHeaderContainerSelector = ".jbh-page-header-container h1, app-title h1";
     static breadcrumbSelector = ".p-breadcrumb, p-breadcrumb";
-    static tableCaptionSelector = ".table-caption h2, p-header h2, .p-datatable-header .h2";
+    static tableCaptionSelector = ".table-caption h2,.table-caption h3, p-header h2, p-header h3, .p-datatable-header .h2";
     static tableSelector = "table.p-datatable-table, p-table .ui-table .ui-table-scrollable-body table";
     static highestZoom = 2;
     static lowestZoom = 1;
@@ -18,7 +18,7 @@ class DatagridZoomer {
                 if(!datagrid.getAttribute("zoomer")) {
                     try {
                         const tableCaption = datagrid.querySelector(DatagridZoomer.tableCaptionSelector);
-                        if(tableCaption) {
+                        if(tableCaption && tableCaption.innerText != "") {
                             const storageKey = this.getStorageKey(tableCaption.innerText);
 
                             let closestTable = datagrid.querySelector(DatagridZoomer.tableSelector);
@@ -31,14 +31,14 @@ class DatagridZoomer {
                                     closestTable.style.zoom = storedZoom.valueOf();
                                     this.resetButtons(datagrid, storedZoom.valueOf())
                                 }
+                                datagrid.setAttribute("zoomer", "true");
                             }    
                         }
                     } catch (error) {
                         console.error(error);
-                    } finally {
                         //This is to keep the buttons from indefinitely adding on error
                         datagrid.setAttribute("zoomer", "true");
-                    }
+                    } 
                 }
             });
         }, 2000)
