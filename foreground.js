@@ -40,13 +40,18 @@ class DatagridZoomer {
         }, 2000)
     }
     getMainStorageKeyPrefix() {
+        let storageKeyPrefix = "zoomerTable";
         const pageHeaderContainer = document.querySelector(DatagridZoomer.pageHeaderContainerSelector);
         if(pageHeaderContainer) {
             const headerText = pageHeaderContainer.innerText;
-            const breadCrumbs = document.querySelectorAll(DatagridZoomer.breadcrumbSelector)[0].innerText;
-            return (headerText + "_" + breadCrumbs + "_").replace(/(\r\n|\n|\r)/gm, "").replace(/ /gm, "");
+            storageKeyPrefix = headerText;
+            const breadCrumbs = document.querySelectorAll(DatagridZoomer.breadcrumbSelector)
+            if(breadCrumbs) {
+                breadCrumbs[0].innerText;
+                storageKeyPrefix += ("_" + breadCrumbs + "_");
+            }
         }
-        return null;
+        return storageKeyPrefix.replace(/(\r\n|\n|\r)/gm, "").replace(/ /gm, "");
        
     }
     createZoomerButton(zoomIn, closestTable, storageKey){
