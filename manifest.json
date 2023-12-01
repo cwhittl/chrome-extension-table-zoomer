@@ -8,8 +8,6 @@
         "48": "logo/logo-48.png",
         "128": "logo/logo-128.png"
     },
-    "permissions": [],
-    "host_permissions": [],
     "content_scripts": [
         {
             "js": [
