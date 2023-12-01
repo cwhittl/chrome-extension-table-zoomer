@@ -15,17 +15,25 @@ class DatagridZoomer {
                     const datagrids = document.querySelectorAll(DatagridZoomer.dataGridSelector);
                     datagrids.forEach((datagrid) => {
                         if(!datagrid.getAttribute("zoomer")) {
-                            const tableCaption = datagrid.querySelector(DatagridZoomer.tableCaptionSelector);
-                            const storageKey = mainStorageKeyPrefix + tableCaption.innerHTML;
-                            let closestTable = datagrid.querySelector(DatagridZoomer.tableSelector);
-                            tableCaption.appendChild(this.createZoomerButton(true, closestTable, storageKey));
-                            tableCaption.appendChild(this.createZoomerButton(false, closestTable, storageKey));
-                            let storedZoom = localStorage.getItem(storageKey);
-                            if(storedZoom) {
-                                closestTable.style.zoom = storedZoom.valueOf();
-                                this.resetButtons(datagrid, storedZoom.valueOf())
+                            try {
+                                const tableCaption = datagrid.querySelector(DatagridZoomer.tableCaptionSelector);
+                                const storageKey = mainStorageKeyPrefix + tableCaption.innerHTML;
+    
+                                let closestTable = datagrid.querySelector(DatagridZoomer.tableSelector);
+                                tableCaption.appendChild(this.createZoomerButton(true, closestTable, storageKey));
+                                tableCaption.appendChild(this.createZoomerButton(false, closestTable, storageKey));
+                                
+                                let storedZoom = localStorage.getItem(storageKey);
+                                if(storedZoom) {
+                                    closestTable.style.zoom = storedZoom.valueOf();
+                                    this.resetButtons(datagrid, storedZoom.valueOf())
+                                }    
+                            } catch (error) {
+                                console.error(error);
+                            } finally {
+                                //This is to keep the buttons from indefinitely adding on error
+                                datagrid.setAttribute("zoomer", "true");
                             }
-                            datagrid.setAttribute("zoomer", "true");
                         }
                     });
                 }
