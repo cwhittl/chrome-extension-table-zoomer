@@ -1,21 +1,24 @@
 class DatagridZoomer {
     static dataGridSelector = "jbh-data-grid, app-table, shared-data-panel";
-    static btnClass = "zoomer-button";
-    static zoomInClass = "zoom-in";
-    static zoomOutClass = "zoom-out";
     static pageHeaderContainerSelector = ".jbh-page-header-container h1, app-title h1";
     static breadcrumbSelector = ".p-breadcrumb, p-breadcrumb";
     static tableCaptionSelector = ".table-caption h2,.table-caption h3, p-header h2, p-header h3, .p-datatable-header .h2";
     static tableSelector = "table.p-datatable-table, p-table .ui-table .ui-table-scrollable-body table";
+ 
+    static btnClass = "zoomer-button";
+    static zoomInClass = "zoom-in";
+    static zoomOutClass = "zoom-out";
     static highestZoom = 2;
     static lowestZoom = 1;
     static zoomIncrement = .25;
+    
+    static zoomerAttribute = "zoomer";
 
     constructor() {
         setInterval(() =>{
             const datagrids = document.querySelectorAll(DatagridZoomer.dataGridSelector);
             datagrids.forEach((datagrid) => {
-                if(!datagrid.getAttribute("zoomer")) {
+                if(!datagrid.getAttribute(DatagridZoomer.zoomerAttribute)) {
                     try {
                         const tableCaption = datagrid.querySelector(DatagridZoomer.tableCaptionSelector);
                         if(tableCaption && tableCaption.innerText != "") {
@@ -31,13 +34,13 @@ class DatagridZoomer {
                                     closestTable.style.zoom = storedZoom.valueOf();
                                     this.resetButtons(datagrid, storedZoom.valueOf())
                                 }
-                                datagrid.setAttribute("zoomer", "true");
+                                datagrid.setAttribute(DatagridZoomer.zoomerAttribute, "true");
                             }    
                         }
                     } catch (error) {
                         console.error(error);
                         //This is to keep the buttons from indefinitely adding on error
-                        datagrid.setAttribute("zoomer", "true");
+                        datagrid.setAttribute(DatagridZoomer.zoomerAttribute, "true");
                     } 
                 }
             });
