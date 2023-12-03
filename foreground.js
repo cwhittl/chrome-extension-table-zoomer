@@ -2,7 +2,7 @@ class DatagridZoomer {
     static dataGridSelector = "jbh-data-grid, app-table, shared-data-panel";
     static pageHeaderContainerSelector = ".jbh-page-header-container h1, app-title h1";
     static breadcrumbSelector = ".p-breadcrumb, p-breadcrumb";
-    static tableCaptionSelector = ".table-caption h2,.table-caption h3, p-header h2, p-header h3, .p-datatable-header .h2";
+    static tableCaptionSelector = ".table-caption h2, .table-caption h3, p-header h2, p-header h3, .p-datatable-header .h2, .p-datatable-header .h3";
     static tableSelector = "table.p-datatable-table, p-table .ui-table .ui-table-scrollable-body table";
  
     static btnClass = "zoomer-button";
@@ -15,22 +15,29 @@ class DatagridZoomer {
     static zoomerAttribute = "zoomer";
 
     constructor() {
+        console.debug('Datagrid Zoomer Loaded');
         setInterval(() =>{
+            console.debug('DGZ - Looking for DGs');
             const datagrids = document.querySelectorAll(DatagridZoomer.dataGridSelector);
             datagrids.forEach((datagrid) => {
                 if(!datagrid.getAttribute(DatagridZoomer.zoomerAttribute)) {
                     try {
+                        console.debug("got unprocessed data grid");
                         const tableCaption = datagrid.querySelector(DatagridZoomer.tableCaptionSelector);
+                        console.debug(tableCaption);
                         if(tableCaption && tableCaption.innerText != "") {
+                            console.debug("got table caption");
                             const storageKey = this.getStorageKey(tableCaption.innerText);
 
                             let closestTable = datagrid.querySelector(DatagridZoomer.tableSelector);
                             if(closestTable) {
+                                console.debug("got closest table");
                                 tableCaption.appendChild(this.createZoomerButton(true, closestTable, storageKey));
                                 tableCaption.appendChild(this.createZoomerButton(false, closestTable, storageKey));
                                 
                                 let storedZoom = localStorage.getItem(storageKey);
                                 if(storedZoom) {
+                                    console.debug("got stored zoom " + storedZoom);
                                     closestTable.style.zoom = storedZoom.valueOf();
                                     this.resetButtons(datagrid, storedZoom.valueOf())
                                 }
