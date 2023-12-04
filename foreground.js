@@ -1,9 +1,9 @@
 class DatagridZoomer {
-    static dataGridSelector = "jbh-data-grid, app-table, shared-data-panel";
+    static dataGridSelector = "jbh-data-grid, app-table, shared-data-panel, jbh-tree-data-grid, app-list-view";
     static pageHeaderContainerSelector = ".jbh-page-header-container h1, app-title h1";
     static breadcrumbSelector = ".p-breadcrumb, p-breadcrumb";
-    static tableCaptionSelector = ".table-caption h2, .table-caption h3, p-header h2, p-header h3, .p-datatable-header .h2, .p-datatable-header .h3";
-    static tableSelector = "table.p-datatable-table, p-table .ui-table .ui-table-scrollable-body table";
+    static tableCaptionSelector = '.table-caption h2, .table-caption h3, p-header h2, p-header h3, .p-datatable-header .h2, .p-datatable-header .h3, .p-datatable div[jbh-slot="customTitle"]';
+    static tableSelector = "table.p-datatable-table, p-table .ui-table .ui-table-scrollable-body table, p-table .ui-table .ui-table-scrollable-view table, .p-treetable-wrapper table";
  
     static btnClass = "zoomer-button";
     static zoomInClass = "zoom-in";

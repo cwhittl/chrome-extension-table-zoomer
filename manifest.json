@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "Datagrid Zoomer",
     "description": "This plugin is made for J.B. Hunt employees that need additional zooming on datagrids due to issues with their vision.",
-    "version": "1.2.1",
+    "version": "1.2.4",
     "icons": {
         "16": "logo/logo-16.png",
         "48": "logo/logo-48.png",
