@@ -28,7 +28,7 @@ class DatagridZoomer {
                         if(tableCaption && tableCaption.innerText != "") {
                             console.debug("got table caption");
                             const storageKey = this.getStorageKey(tableCaption.innerText);
-
+                            console.debug("storage key = " + storageKey);
                             let closestTable = datagrid.querySelector(DatagridZoomer.tableSelector);
                             if(closestTable) {
                                 console.debug("got closest table");
@@ -51,22 +51,17 @@ class DatagridZoomer {
                     } 
                 }
             });
-        }, 2000)
+        }, 3000)
     }
     getStorageKey(suffix) {
         let storageKeyPrefix = "zoomerTable_";
-        const pageHeaderContainer = document.querySelector(DatagridZoomer.pageHeaderContainerSelector);
-        if(pageHeaderContainer) {
-            storageKeyPrefix += pageHeaderContainer.innerText + "_";
-        }
-        const breadCrumbs = document.querySelectorAll(DatagridZoomer.breadcrumbSelector)
-        if(breadCrumbs) {
-            breadCrumbs[0].innerText;
-            storageKeyPrefix += breadCrumbs + "_";
+        const breadCrumbs = document.querySelector(DatagridZoomer.breadcrumbSelector)
+        if(breadCrumbs && breadCrumbs.innerText != "") {
+            storageKeyPrefix += breadCrumbs.innerText + "_";
         }
         storageKeyPrefix += suffix;
-        return storageKeyPrefix.replace(/(\r\n|\n|\r)/gm, "").replace(/ /gm, "");
-       
+        let cleanedPrefix = storageKeyPrefix.replace(/(\r\n|\n|\r)/gm, "").replace(/ /gm, "");
+        return cleanedPrefix.substring(0, cleanedPrefix.indexOf("("));
     }
     createZoomerButton(zoomIn, closestTable, storageKey){
         let btn = document.createElement("button");
