@@ -1,14 +1,14 @@
 class DatagridZoomer {
-    static dataGridSelector = "jbh-data-grid, app-table, shared-data-panel, jbh-tree-data-grid, app-list-view";
+    static dataGridSelector = "jbh-data-grid, app-table, shared-data-panel, jbh-tree-data-grid, app-list-view, app-data-table";
     static pageHeaderContainerSelector = ".jbh-page-header-container h1, app-title h1";
     static breadcrumbSelector = ".p-breadcrumb, p-breadcrumb";
-    static tableCaptionSelector = '.table-caption h2, .table-caption h3, p-header h2, p-header h3, .p-datatable-header .h2, .p-datatable-header .h3, .p-datatable div[jbh-slot="customTitle"]';
-    static tableSelector = "table.p-datatable-table, p-table .ui-table .ui-table-scrollable-body table, p-table .ui-table .ui-table-scrollable-view table, .p-treetable-wrapper table";
+    static tableCaptionSelector = '.table-caption h2, .table-caption h3, p-header h2, p-header h3, .p-datatable-header .h2, .p-datatable-header .h3, .p-datatable div[jbh-slot="customTitle"], .ui-table-caption h2, .ui-table-caption h3';
+    static tableSelector = ".ui-table-scrollable-wrapper, .p-datatable-wrapper"
  
     static btnClass = "zoomer-button";
     static zoomInClass = "zoom-in";
     static zoomOutClass = "zoom-out";
-    static highestZoom = 2;
+    static highestZoom = 2.5;
     static lowestZoom = 1;
     static zoomIncrement = .25;
     
