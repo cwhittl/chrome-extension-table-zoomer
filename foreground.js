@@ -3,7 +3,7 @@ class DatagridZoomer {
     static pageHeaderContainerSelector = ".jbh-page-header-container h1, app-title h1";
     static breadcrumbSelector = ".p-breadcrumb, p-breadcrumb";
     static tableCaptionSelector = '.table-caption h2, .table-caption h3, p-header h2, p-header h3, .p-datatable-header .h2, .p-datatable-header .h3, .p-datatable div[jbh-slot="customTitle"], .ui-table-caption h2, .ui-table-caption h3';
-    static tableSelector = ".ui-table-scrollable-wrapper, .p-datatable-wrapper"
+    static tableSelector = ".ui-table-scrollable-wrapper, .p-datatable-wrapper, .p-treetable-wrapper"
  
     static btnClass = "zoomer-button";
     static zoomInClass = "zoom-in";
